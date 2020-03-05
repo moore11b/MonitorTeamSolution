@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MonitorTeamSolution.Services;
 using MonitorTeamSolution.Services.Interfaces;
+using MonitorTeamSolution.Models.Entities;
 
 namespace MonitorTeamSolution
 {
@@ -40,7 +41,10 @@ namespace MonitorTeamSolution
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            /*  services.AddDefaultIdentity<IdentityUser>()
+                  .AddDefaultUI(UIFramework.Bootstrap4)
+                  .AddEntityFrameworkStores<ApplicationDbContext>();*/
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IRoleRepo, DbRoleRepo>();

@@ -12,79 +12,88 @@ namespace MonitorTeamSolution.Services
 {
     public class DbUserRepo : IUserRepo
     {
-        private ApplicationDbContext _db;
-        private UserManager<ApplicationUser> _userManager;
-        private RoleManager<IdentityRole> _roleManager;
-        /// <summary>
-        /// Constructor for a user entity. 
-        /// </summary>
-        /// <param name="db"></param>
-        /// <param name="userManager"></param>
-        /// <param name="roleManager"></param>
-        public DbUserRepo(ApplicationDbContext db,
-           UserManager<ApplicationUser> userManager,
-           RoleManager<IdentityRole> roleManager)
+        private readonly ApplicationDbContext _db;
+        UserManager<IdentityUser> _userManager;
+        public DbUserRepo(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
-        /// <summary>
-        /// Assigns a role to the user. (If required)
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="roleName"></param>
-        /// <returns></returns>
-        public async Task<bool> AssignRoleAsync(string userName, string roleName)
+        public IQueryable<ApplicationUser> ReadAll()
         {
-            var user = await ReadAsync(userName);
+            ICollection<ApplicationUser> appUsers = new List<ApplicationUser>();
+            foreach (var user in _db.Users)
+            {
+                ApplicationUser usr = new ApplicationUser
+                {
+                    User = user
+                };
+                AddRoles(usr);
+                appUsers.Add(usr);
+            }
+            return appUsers.AsQueryable();
+        }
+
+        private void AddRoles(ApplicationUser user)
+        {
+            var roleIds = _db.UserRoles
+               .Where(ur => ur.UserId == user.User.Id)
+               .Select(ur => ur.RoleId);
+            foreach (var roleId in roleIds)
+            {
+                user.Roles.Add(_db.Roles.Find(roleId));
+            }
+        }
+
+        public ApplicationUser Read(string userName)
+        {
+            ApplicationUser appUser = null;
+            var identityUser = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            if (identityUser != null)
+            {
+                appUser = new ApplicationUser
+                {
+                    User = identityUser
+                };
+                AddRoles(appUser);
+            }
+            return appUser;
+        }
+
+        public bool AssignRole(string userName, string roleName)
+        {
+            var user = Read(userName);
             if (user != null)
             {
+                //If user does not have role roleName
                 if (!user.HasRole(roleName))
                 {
-                    await _userManager.AddToRoleAsync(user, roleName);
+                    _userManager.AddToRoleAsync(user.User, roleName).Wait();
                     return true;
                 }
             }
             return false;
         }
-        /// <summary>
-        /// Reads all the users in the database. 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IQueryable<ApplicationUser>> ReadAllAsync()
+
+        public async Task<ApplicationUser> CreateAsync(IdentityUser identityUser, string password)
         {
-            var users = _db.Users;
-            foreach (var user in users)
+            await _userManager.CreateAsync(identityUser, password);
+            ApplicationUser user = new ApplicationUser
             {
-                user.Roles = await _userManager.GetRolesAsync(user);
+                User = identityUser
+            };
+            return user;
+        }
+
+
+        public bool Exists(string username)
+        {
+            if (_db.Users.Any(u => u.UserName == username))
+            {
+                return false;
             }
-            return users;
-        }
-        /// <summary>
-        /// Finds a user by an email address.  Returns the instance 
-        /// of the user as an async task. 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        public async Task<ApplicationUser> ReadAsyncByEmail(string email)
-        {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
-            user.Roles = await _userManager.GetRolesAsync(user);
-            return user;
-        }
-        /// <summary>
-        /// Finds a user by the user's id.  Returns the instance 
-        /// of the user as an async task.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ApplicationUser> ReadAsync(string id)
-        {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id);
-            user.Roles = await _userManager.GetRolesAsync(user);
-            return user;
+            return true;
         }
     }//end class
 }//end namespace

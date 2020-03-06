@@ -41,16 +41,18 @@ namespace MonitorTeamSolution
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            /*  services.AddDefaultIdentity<IdentityUser>()
-                  .AddDefaultUI(UIFramework.Bootstrap4)
-                  .AddEntityFrameworkStores<ApplicationDbContext>();*/
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddScoped<IRoleRepo, DbRoleRepo>();
-            services.AddScoped<IUserRepo, DbUserRepo>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                       .AddUserManager<UserManager<IdentityUser>>()
+                       .AddRoles<IdentityRole>()
+                       .AddEntityFrameworkStores<ApplicationDbContext>()
+                       .AddDefaultUI()
+                       .AddDefaultTokenProviders();
 
-            services.AddScoped<IPageInfoRepo, DbPageInfo>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IUserRepo, DbUserRepo>();
+            services.AddScoped<Initializer>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

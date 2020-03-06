@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace MonitorTeamSolution.Models.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser 
     {
-        [NotMapped]
-        public ICollection<string> Roles { get; set; }
+        public IdentityUser User { get; set; }
+        public ICollection<IdentityRole> Roles { get; set; }
+
+        public ApplicationUser()
+        {
+            Roles = new List<IdentityRole>();
+        }
 
         public bool HasRole(string roleName)
         {
-            return Roles.Any(r => r == roleName);
-        }//end method
+            return Roles.FirstOrDefault(r => r.Name == roleName) != null;
+        }
     }//end class
 }//end namespace

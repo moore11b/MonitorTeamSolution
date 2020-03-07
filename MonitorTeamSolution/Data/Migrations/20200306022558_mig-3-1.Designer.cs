@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonitorTeamSolution.Data;
 
 namespace MonitorTeamSolution.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306022558_mig-3-1")]
+    partial class mig31
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +26,6 @@ namespace MonitorTeamSolution.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ApplicationUserId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -36,8 +36,6 @@ namespace MonitorTeamSolution.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -184,95 +182,6 @@ namespace MonitorTeamSolution.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MonitorTeamSolution.Models.Entities.ApplicationUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("PageInfoId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PageInfoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ApplicationUser");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.Entities.Logs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NumberOfPageViews");
-
-                    b.Property<int?>("PageInfoId");
-
-                    b.Property<string>("PageTitle");
-
-                    b.Property<string>("SessionDuration");
-
-                    b.Property<string>("TimeLoggedIn");
-
-                    b.Property<string>("TimeLoggedOut");
-
-                    b.Property<string>("TimeStamp");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PageInfoId");
-
-                    b.ToTable("Logs");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.Entities.PageInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PageTitle");
-
-                    b.Property<string>("TimeStamp");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pages");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.ViewModels.UserListVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email");
-
-                    b.Property<int>("NumberOfRoles");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserListVM");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.HasOne("MonitorTeamSolution.Models.Entities.ApplicationUser")
-                        .WithMany("Roles")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -316,24 +225,6 @@ namespace MonitorTeamSolution.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("MonitorTeamSolution.Models.Entities.PageInfo")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("PageInfoId");
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.Entities.Logs", b =>
-                {
-                    b.HasOne("MonitorTeamSolution.Models.Entities.PageInfo")
-                        .WithMany("LogList")
-                        .HasForeignKey("PageInfoId");
                 });
 #pragma warning restore 612, 618
         }

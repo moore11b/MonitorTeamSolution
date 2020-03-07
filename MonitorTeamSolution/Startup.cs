@@ -51,6 +51,9 @@ namespace MonitorTeamSolution
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IUserRepo, DbUserRepo>();
+            services.AddScoped<IRoleRepo, DbRoleRepo>();
+            services.AddScoped<IPagesRepo, DbPagesRepo>();
+            services.AddScoped<ILogsRepo, DbLogsRepo>();
             services.AddScoped<Initializer>();
 
 

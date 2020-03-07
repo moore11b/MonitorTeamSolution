@@ -9,6 +9,7 @@ namespace MonitorTeamSolution.Models.Entities
 {
     public class ApplicationUser 
     {
+        public int Id { get; set; }
         public IdentityUser User { get; set; }
         public ICollection<IdentityRole> Roles { get; set; }
 

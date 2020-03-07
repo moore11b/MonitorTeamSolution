@@ -15,5 +15,11 @@ namespace MonitorTeamSolution.Data
             : base(options)
         {
         }
+
+        public DbSet<Logs> Logs { get; set; }
+        public DbSet<PageInfo> Pages { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.UserListVM> UserListVM { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.LogListVM> LogListVM { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.PageListVM> PageListVM { get; set; }
     }
 }

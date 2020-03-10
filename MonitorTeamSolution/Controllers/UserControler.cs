@@ -32,10 +32,10 @@ namespace MonitorTeamSolution.Controllers
         public IActionResult Index()
         {
             var user = _userRepo.Read(User.Identity.Name);
-          /*  if (!user.HasRole("Admin"))
+            if (!user.HasRole("Admin"))
             {
                 return LocalRedirect("/Identity/Account/AccessDenied");
-            }*/
+            }
 
             var users = _userRepo.ReadAll();
             var userList = users
@@ -56,10 +56,10 @@ namespace MonitorTeamSolution.Controllers
         public IActionResult AssignRoles()
         {
             var user = _userRepo.Read(User.Identity.Name);
-           /* if (!user.HasRole("Admin"))
+            if (!user.HasRole("Admin"))
             {
                 return LocalRedirect("/Identity/Account/AccessDenied");
-            }*/
+            }
 
             var users = _userRepo.ReadAll().Select(u => u.User.UserName).ToList();
             var roles = _roleRepo.ReadAll().Select(r => r.Name).ToList();
@@ -85,10 +85,10 @@ namespace MonitorTeamSolution.Controllers
         public IActionResult Create()
         {
             var user = _userRepo.Read(User.Identity.Name);
-           /* if (!user.HasRole("Admin"))
+            if (!user.HasRole("Admin"))
             {
                 return LocalRedirect("/Identity/Account/AccessDenied");
-            }*/
+            }
             return View();
         }
 

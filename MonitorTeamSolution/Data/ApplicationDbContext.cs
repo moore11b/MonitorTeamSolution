@@ -21,5 +21,8 @@ namespace MonitorTeamSolution.Data
         public DbSet<MonitorTeamSolution.Models.ViewModels.UserListVM> UserListVM { get; set; }
         public DbSet<MonitorTeamSolution.Models.ViewModels.LogListVM> LogListVM { get; set; }
         public DbSet<MonitorTeamSolution.Models.ViewModels.PageListVM> PageListVM { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.LogCreateVM> LogCreateVM { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.LogEditVM> LogEditVM { get; set; }
+        public DbSet<MonitorTeamSolution.Models.ViewModels.LogDeleteVM> LogDeleteVM { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace MonitorTeamSolution.Controllers
         
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Logs");
         }
 
         public IActionResult Privacy()

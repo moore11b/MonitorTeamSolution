@@ -1,5 +1,6 @@
 ﻿using MonitorTeamSolution.Data;
 using MonitorTeamSolution.Models.Entities;
+using MonitorTeamSolution.Models.ViewModels;
 using MonitorTeamSolution.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,24 @@ namespace MonitorTeamSolution.Services
 
         public IQueryable<Logs> ReadAll()
         {
-            ICollection<Logs> logList = new List<Logs>();
-            foreach (var log in _db.Logs)
-            {
-                logList.Add(log);
-            }
-            return logList.AsQueryable();
+            return _db.Logs;
         }
 
-        public Logs CreateLog(Logs log)
+        public Logs CreateLog(LogCreateVM log)
         {
-            _db.Logs.Add(log);
+            Logs newLog = new Logs();
+            if (log != null)
+            {
+                newLog.NumberOfPageViews = log.NumberOfPageViews;
+                newLog.PageTitle = log.PageTitle;
+                newLog.SessionDuration = log.SessionDuration;
+                newLog.TimeLoggedIn = log.TimeLoggedIn;
+                newLog.TimeLoggedOut = log.TimeLoggedOut;
+                newLog.TimeStamp = log.TimeStamp;
+            }
+            _db.Logs.Add(newLog);
             _db.SaveChanges();
-            return log;
+            return newLog;
         }
         public Logs ReadLog(int id)
         {
@@ -40,7 +46,7 @@ namespace MonitorTeamSolution.Services
         }
 
 
-        public void UpdateLog(int id, Logs log)
+        public void UpdateLog(int id, LogEditVM log )
         {
             var oldLog = ReadLog(id);
             if(oldLog != null)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonitorTeamSolution.Data;
 
 namespace MonitorTeamSolution.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200311210402_mid5-1")]
+    partial class mid51
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,12 +192,6 @@ namespace MonitorTeamSolution.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PageCreateVMId");
-
-                    b.Property<int?>("PageDeleteVMId");
-
-                    b.Property<int?>("PageEditVMId");
-
                     b.Property<int?>("PageInfoId");
 
                     b.Property<int?>("PageListVMId");
@@ -203,12 +199,6 @@ namespace MonitorTeamSolution.Data.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PageCreateVMId");
-
-                    b.HasIndex("PageDeleteVMId");
-
-                    b.HasIndex("PageEditVMId");
 
                     b.HasIndex("PageInfoId");
 
@@ -227,12 +217,6 @@ namespace MonitorTeamSolution.Data.Migrations
 
                     b.Property<string>("NumberOfPageViews");
 
-                    b.Property<int?>("PageCreateVMId");
-
-                    b.Property<int?>("PageDeleteVMId");
-
-                    b.Property<int?>("PageEditVMId");
-
                     b.Property<int?>("PageInfoId");
 
                     b.Property<int?>("PageListVMId");
@@ -250,12 +234,6 @@ namespace MonitorTeamSolution.Data.Migrations
                     b.Property<string>("UserName");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PageCreateVMId");
-
-                    b.HasIndex("PageDeleteVMId");
-
-                    b.HasIndex("PageEditVMId");
 
                     b.HasIndex("PageInfoId");
 
@@ -381,57 +359,6 @@ namespace MonitorTeamSolution.Data.Migrations
                     b.ToTable("LogListVM");
                 });
 
-            modelBuilder.Entity("MonitorTeamSolution.Models.ViewModels.PageCreateVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PageTitle");
-
-                    b.Property<string>("TimeStamp");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PageCreateVM");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.ViewModels.PageDeleteVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PageTitle");
-
-                    b.Property<string>("TimeStamp");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PageDeleteVM");
-                });
-
-            modelBuilder.Entity("MonitorTeamSolution.Models.ViewModels.PageEditVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PageTitle");
-
-                    b.Property<string>("TimeStamp");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PageEditVM");
-                });
-
             modelBuilder.Entity("MonitorTeamSolution.Models.ViewModels.PageListVM", b =>
                 {
                     b.Property<int>("Id")
@@ -520,18 +447,6 @@ namespace MonitorTeamSolution.Data.Migrations
 
             modelBuilder.Entity("MonitorTeamSolution.Models.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageCreateVM")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("PageCreateVMId");
-
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageDeleteVM")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("PageDeleteVMId");
-
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageEditVM")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("PageEditVMId");
-
                     b.HasOne("MonitorTeamSolution.Models.Entities.PageInfo")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("PageInfoId");
@@ -547,18 +462,6 @@ namespace MonitorTeamSolution.Data.Migrations
 
             modelBuilder.Entity("MonitorTeamSolution.Models.Entities.Logs", b =>
                 {
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageCreateVM")
-                        .WithMany("LogList")
-                        .HasForeignKey("PageCreateVMId");
-
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageDeleteVM")
-                        .WithMany("LogList")
-                        .HasForeignKey("PageDeleteVMId");
-
-                    b.HasOne("MonitorTeamSolution.Models.ViewModels.PageEditVM")
-                        .WithMany("LogList")
-                        .HasForeignKey("PageEditVMId");
-
                     b.HasOne("MonitorTeamSolution.Models.Entities.PageInfo")
                         .WithMany("LogList")
                         .HasForeignKey("PageInfoId");

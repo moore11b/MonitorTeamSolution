@@ -6,8 +6,8 @@
 
 <h1>Logs</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p> 
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -37,30 +37,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeLoggedIn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeLoggedOut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfPageViews)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SessionDuration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PageTitle)
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeLoggedIn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeLoggedOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPageViews)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SessionDuration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageTitle)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

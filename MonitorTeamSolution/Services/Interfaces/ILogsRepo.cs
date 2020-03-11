@@ -1,4 +1,5 @@
 ﻿using MonitorTeamSolution.Models.Entities;
+using MonitorTeamSolution.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace MonitorTeamSolution.Services.Interfaces
     public interface ILogsRepo
     {
         IQueryable<Logs> ReadAll();
-        Logs CreateLog(Logs log);
+        Logs CreateLog(LogCreateVM log);
         Logs ReadLog(int id);
-        void UpdateLog(int id, Logs log);
+        void UpdateLog(int id, LogEditVM log);
 
         void DeleteLogs(int id);
 

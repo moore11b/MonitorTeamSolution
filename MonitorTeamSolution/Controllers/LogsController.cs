@@ -31,9 +31,9 @@ namespace MonitorTeamSolution.Controllers
         public IActionResult Index()
         {
              var user = _userRepo.Read(User.Identity.Name);
-              if (!user.HasRole("Admin"))
+              if (user.HasRole("Admin"))
               {
-                  return LocalRedirect("/Identity/Account/AccessDenied");
+                  return View("AdminView");
               }
 
             var pages = _logsRepo.ReadAll();
@@ -42,6 +42,34 @@ namespace MonitorTeamSolution.Controllers
                {
                    Id = u.Id,
                    TimeStamp = u.TimeStamp,
+                   TimeLoggedOut = u.TimeLoggedOut,
+                   TimeLoggedIn = u.TimeLoggedIn,
+                   NumberOfPageViews = u.NumberOfPageViews,
+                   SessionDuration = u.SessionDuration,
+                   PageTitle = u.PageTitle,
+                   UserName = u.UserName
+               });
+            return View(pageList);
+
+        }//end index
+        public IActionResult AdminView()
+        {
+            var user = _userRepo.Read(User.Identity.Name);
+            if (!user.HasRole("Admin"))
+            {
+                return LocalRedirect("/Identity/Account/AccessDenied");
+            }
+            
+            var pages = _logsRepo.ReadAll();
+            var pageList = pages
+               .Select(u => new LogListVM
+               {
+                   Id = u.Id,
+                   TimeStamp = u.TimeStamp,
+                   TimeLoggedOut = u.TimeLoggedOut,
+                   TimeLoggedIn = u.TimeLoggedIn,
+                   NumberOfPageViews = u.NumberOfPageViews,
+                   SessionDuration = u.SessionDuration,
                    PageTitle = u.PageTitle,
                    UserName = u.UserName
                });
@@ -49,7 +77,7 @@ namespace MonitorTeamSolution.Controllers
 
         }//end index
         [Authorize(Roles = "Admin")]
-        public IActionResult Create(int logId)
+        public IActionResult Create()
         {
             var user = _userRepo.Read(User.Identity.Name);
             if (!user.HasRole("Admin"))
@@ -61,14 +89,56 @@ namespace MonitorTeamSolution.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Create(LogCreateVM log)
+        public IActionResult Create(LogCreateVM logVM)
         {
             Logs newLog = new Logs
             {
-                Id = log.Id
+                Id = logVM.Id,
+                NumberOfPageViews = logVM.NumberOfPageViews,
+                PageTitle = logVM.PageTitle,
+                SessionDuration = logVM.SessionDuration,
+                TimeLoggedIn = logVM.TimeLoggedIn,
+                TimeLoggedOut = logVM.TimeLoggedOut,
+                TimeStamp = logVM.TimeStamp,
+                UserName = logVM.UserName
             };
+
             _logsRepo.CreateLog(newLog);
-            return View();
+            return RedirectToAction("Index", "Logs");
+        }
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            var deleteLog = _logsRepo.ReadLog(id);
+            if (deleteLog == null)
+            {
+                return NotFound("Could not find Grocery List.");
+            }
+            
+            var deleteLogVM = new LogDeleteVM
+            {
+               Id = deleteLog.Id,
+               NumberOfPageViews = deleteLog.NumberOfPageViews,
+               PageTitle = deleteLog.PageTitle,
+               SessionDuration = deleteLog.SessionDuration,
+               TimeLoggedIn = deleteLog.TimeLoggedIn,
+               TimeLoggedOut = deleteLog.TimeLoggedOut,
+               TimeStamp = deleteLog.TimeStamp,
+               UserName = deleteLog.UserName
+            };
+            return View(deleteLogVM);
+        }
+
+        /// <summary>
+        /// Deletes a specified grocery list. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _logsRepo.DeleteLogs(id);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

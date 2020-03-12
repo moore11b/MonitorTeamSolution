@@ -10,6 +10,7 @@ using MonitorTeamSolution.Services.Interfaces;
 
 namespace MonitorTeamSolution.Controllers
 {
+    [Authorize]
     public class LogsController : Controller
     {
         private ILogsRepo _logsRepo;
@@ -78,7 +79,7 @@ namespace MonitorTeamSolution.Controllers
             _logsRepo.CreateLog(newLog);
             return RedirectToAction("Index", "Logs");
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var log = _logsRepo.ReadLog(id);

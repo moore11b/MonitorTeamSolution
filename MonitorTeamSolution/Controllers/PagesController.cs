@@ -10,6 +10,7 @@ using MonitorTeamSolution.Services.Interfaces;
 
 namespace MonitorTeamSolution.Controllers
 {
+    [Authorize]
     public class PagesController : Controller
     {
         private IPagesRepo _pagesRepo;
@@ -31,10 +32,7 @@ namespace MonitorTeamSolution.Controllers
         public IActionResult Index()
         {
             var user = _userRepo.Read(User.Identity.Name);
-              if (!user.HasRole("Admin"))
-              {
-                  return LocalRedirect("/Identity/Account/AccessDenied");
-              }
+             
 
             var pages = _pagesRepo.ReadAll();
             var pageList = pages
@@ -79,7 +77,7 @@ namespace MonitorTeamSolution.Controllers
             _pagesRepo.Create(newPage);
             return RedirectToAction("Index", "Pages");
         }//end Create Pages
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var page = _pagesRepo.Read(id);
@@ -99,7 +97,7 @@ namespace MonitorTeamSolution.Controllers
             };
             return View(pageVM);
         }//end get edit
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(PageEditVM pageEditVm)
         {

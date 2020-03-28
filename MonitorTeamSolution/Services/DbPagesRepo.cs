@@ -33,7 +33,7 @@ namespace MonitorTeamSolution.Services
 
 
         public PageInfo Create(PageCreateVM page)
-        {
+        { 
             PageInfo newPage = new PageInfo();
             if(page != null)
             {

@@ -4,41 +4,59 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1  align="Center">Users</h1>
+<style>
+    table {
+        border-collapse: separate;
+        border-spacing: 20px 0;
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
+    th {
+        border: 2px;
+        border-bottom-style: solid;
+    }
+
+    td {
+        border: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: dimgrey;
+    }
+</style>
+
+<p align="center">
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfRoles)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfRoles)
-            </td>
-            <td>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div>
+    <table style="overflow-x:auto;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfRoles)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfRoles)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

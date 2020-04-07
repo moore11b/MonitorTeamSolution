@@ -2,17 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Monitor Home Page</h1>
+<style>
+    body {
+        color: black;
+    }
 
-</div>
 
-<td>
-    <a asp-action="Index" asp-controller="Logs" class="btn btn-info">View Logs</a>
-</td>
-<td>
-    <a asp-action="Index" asp-controller="Pages" class="btn btn-info">View Pages</a>
-</td>
-<td>
-    <a asp-action="Index" asp-controller="User" class="btn btn-info">View Users</a>
-</td>
+    .dark-mode {
+        background-color: black;
+        color: white;
+    }
+</style>
+<body>
+    <div class="text-center ">
+        <h1 class="display-4">Monitoring Home Page</h1>
+    </div>
+    <p>Use the Navigation bar to view Database information.  Non-admin users are limited to read only privileges. </p>
+</body>

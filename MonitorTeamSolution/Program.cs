@@ -17,8 +17,10 @@ namespace MonitorTeamSolution
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
+
             SeedData(host);
             host.Run();
+            
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

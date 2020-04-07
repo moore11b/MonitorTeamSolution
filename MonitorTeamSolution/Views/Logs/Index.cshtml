@@ -4,71 +4,93 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Logs</h1>
 
-<p> 
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeLoggedIn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeLoggedOut)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfPageViews)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SessionDuration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PageTitle)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TimeStamp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TimeLoggedIn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TimeLoggedOut)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfPageViews)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SessionDuration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PageTitle)
-                </td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+
+        <h1 align="Center"> Logs  </h1>
+
+        <p  align="center">
+            <a asp-action="Create" class="btn btn-success" >Create New</a>
+        </p>
+<div style="overflow-x:auto;">
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 20px 0;
         }
-    </tbody>
-</table>
+
+        th {
+            border: 2px;
+            border-bottom-style: solid;
+        }
+
+        td {
+            border: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: dimgrey;
+        }
+    </style>
+
+    <table >
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeStamp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeLoggedIn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeLoggedOut)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfPageViews)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SessionDuration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PageTitle)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeStamp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeLoggedIn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeLoggedOut)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPageViews)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SessionDuration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PageTitle)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
